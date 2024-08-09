@@ -1,7 +1,6 @@
 from telegram import Update
 from telegram.ext import Updater, CommandHandler, CallbackContext
 
-# Словарь для хранения задач пользователей
 tasks = {}
 
 def start(update: Update, context: CallbackContext) -> None:
