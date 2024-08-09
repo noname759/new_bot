@@ -8,7 +8,7 @@ def start(update: Update, context: CallbackContext) -> None:
     if user_id not in tasks:
         tasks[user_id] = []
     update.message.reply_text('Добро пожаловать!\n'
-                               '\n\n Вы можете начать добавлять задачи с помощью команды /add <название задачи>.')
+                               '\n\n Для получения информации введите /help')
 
 def add(update: Update, context: CallbackContext) -> None:
     user_id = update.message.chat_id
