@@ -58,7 +58,7 @@ def help(update: Update, context: CallbackContext) -> None:
     update.message.reply_text(help_text)
 
 def main() -> None:
-    updater = Updater("YOUR_TELEGRAM_BOT_TOKEN")
+    updater = Updater("7380800891:AAE9okJyeQ-44fiO3atlO7QmSUjYqpPydQ0")
     dispatcher = updater.dispatcher
 
     dispatcher.add_handler(CommandHandler("start", start))
