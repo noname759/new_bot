@@ -7,9 +7,10 @@ def start(update: Update, context: CallbackContext) -> None:
     user_id = update.message.chat_id
     if user_id not in tasks:
         tasks[user_id] = []
-    update.message.reply_text('Добро пожаловать! Вы можете начать добавлять задачи с помощью команды /add <название задачи>.')
+    update.message.reply_text('Добро пожаловать!\n'
+                               '\n\n Вы можете начать добавлять задачи с помощью команды /add <название задачи>.')
 
-def add_task(update: Update, context: CallbackContext) -> None:
+def add(update: Update, context: CallbackContext) -> None:
     user_id = update.message.chat_id
     task = ' '.join(context.args)
     if task:
@@ -18,7 +19,7 @@ def add_task(update: Update, context: CallbackContext) -> None:
     else:
         update.message.reply_text('Пожалуйста, укажите название задачи.')
 
-def list_tasks(update: Update, context: CallbackContext) -> None:
+def list(update: Update, context: CallbackContext) -> None:
     user_id = update.message.chat_id
     if tasks[user_id]:
         task_list = '\n'.join([f'{i+1}. {task}' for i, task in enumerate(tasks[user_id])])
@@ -26,7 +27,7 @@ def list_tasks(update: Update, context: CallbackContext) -> None:
     else:
         update.message.reply_text('У вас нет задач.')
 
-def delete_task(update: Update, context: CallbackContext) -> None:
+def delete(update: Update, context: CallbackContext) -> None:
     user_id = update.message.chat_id
     try:
         task_index = int(context.args[0]) - 1
@@ -35,7 +36,7 @@ def delete_task(update: Update, context: CallbackContext) -> None:
     except (IndexError, ValueError):
         update.message.reply_text('Пожалуйста, укажите правильный номер задачи.')
 
-def edit_task(update: Update, context: CallbackContext) -> None:
+def edit(update: Update, context: CallbackContext) -> None:
     user_id = update.message.chat_id
     try:
         task_index = int(context.args[0]) - 1
@@ -45,7 +46,7 @@ def edit_task(update: Update, context: CallbackContext) -> None:
     except (IndexError, ValueError):
         update.message.reply_text('Пожалуйста, укажите правильный номер задачи и новое название.')
 
-def help_command(update: Update, context: CallbackContext) -> None:
+def help(update: Update, context: CallbackContext) -> None:
     help_text = (
         "/start - Начать взаимодействие с ботом\n"
         "/add <название задачи> - Добавить новую задачу\n"
@@ -61,11 +62,11 @@ def main() -> None:
     dispatcher = updater.dispatcher
 
     dispatcher.add_handler(CommandHandler("start", start))
-    dispatcher.add_handler(CommandHandler("add", add_task))
-    dispatcher.add_handler(CommandHandler("list", list_tasks))
-    dispatcher.add_handler(CommandHandler("delete", delete_task))
-    dispatcher.add_handler(CommandHandler("edit", edit_task))
-    dispatcher.add_handler(CommandHandler("help", help_command))
+    dispatcher.add_handler(CommandHandler("add", add))
+    dispatcher.add_handler(CommandHandler("list", list))
+    dispatcher.add_handler(CommandHandler("delete", delete))
+    dispatcher.add_handler(CommandHandler("edit", edit))
+    dispatcher.add_handler(CommandHandler("help", help))
 
     updater.start_polling()
     updater.idle()
