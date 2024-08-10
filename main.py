@@ -27,22 +27,12 @@ def add(update, context):
 def list(update, context):
     user_id = update.message.from_user.id
     if user_id in tasks and tasks[user_id]:
-        task_list = '\n'.join(f"{i+1}. {task}" for i, task in enumerate(tasks[user_id]))
+        task_list = ""
+        for i in range(len(tasks[user_id])):
+            task_list += f"{i+1}. {tasks[user_id][i]}\n"
         update.message.reply_text(f'Ваши задачи:\n{task_list}')
     else:
         update.message.reply_text('У вас нет задач.')
-def delete(update, context):
-    user_id = update.message.from_user.id
-    try:
-        task_number = int(context.args[0]) - 1 
-        if 0 <= task_number < len(tasks[user_id]):
-            removed_task = tasks[user_id].pop(task_number)  
-            update.message.reply_text(f'Задача "{removed_task}" удалена.')
-            list(update, context) 
-        else:
-            update.message.reply_text('Пожалуйста, укажите правильный номер задачи.')
-    except (IndexError, ValueError):
-        update.message.reply_text('Укажите /delete <номер задачи>')
 
 def edit(update, context):
     user_id = update.message.from_user.id
@@ -58,6 +48,19 @@ def edit(update, context):
             update.message.reply_text('Пожалуйста, укажите правильный номер задачи и новое название.')
     except (IndexError, ValueError):
         update.message.reply_text('Укажите /edit <номер> и <название>')
+
+def delete(update, context):
+    user_id = update.message.from_user.id
+    try:
+        task_number = int(context.args[0]) - 1 
+        if 0 <= task_number < len(tasks[user_id]):
+            removed_task = tasks[user_id].pop(task_number)  
+            update.message.reply_text(f'Задача "{removed_task}" удалена.')
+            list(update, context) 
+        else:
+            update.message.reply_text('Пожалуйста, укажите правильный номер задачи.')
+    except (IndexError, ValueError):
+        update.message.reply_text('Укажите /delete <номер задачи>')
 
 def help(update, context):
     update.message.reply_text(
