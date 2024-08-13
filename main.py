@@ -9,7 +9,7 @@ def start(update, context):
     if user_id not in tasks:
         tasks[user_id] = []
     message = ('Добро пожаловать!\n'
-                '\n\n Для получения информации введите /help')
+               '\n\n Для получения информации введите /help')
     update.message.reply_text(message)
 
 def add(update, context):
@@ -19,7 +19,7 @@ def add(update, context):
         if user_id not in tasks:
             tasks[user_id] = []
         tasks[user_id].append(task_name)
-        update.message.reply_text(f'Задача "{task}" добавлена.')
+        update.message.reply_text(f'Задача "{task_name}" добавлена.')
         list(update, context)
     else:
         update.message.reply_text('Укажите /add <название задачи>.')
@@ -42,7 +42,7 @@ def edit(update, context):
         if 0 <= task_number < len(tasks[user_id]) and new_name:
             old_task = tasks[user_id][task_number]
             tasks[user_id][task_number] = new_name
-            update.message.reply_text(f'Задача обновлена на "{new_task}".')
+            update.message.reply_text(f'Задача обновлена на "{new_name}".')
             list(update, context)
         else:
             update.message.reply_text('Пожалуйста, укажите правильный номер задачи и новое название.')
@@ -88,3 +88,4 @@ def main():
 
 if __name__ == '__main__':
     main()
+            
